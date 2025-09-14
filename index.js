@@ -11,70 +11,41 @@ let computerScore = 0;
 function playGame(playerChoice){
     const computerChoice = choices[Math.floor(Math.random() * choices.length)]
     computerChoiceDisplay.textContent = "Computer choice: " + computerChoice;
-    //console.log("computer choice: " + computerChoice);
     let result = ""
     
     if (playerChoice === computerChoice){
-        resultDisplay.textContent = "It's a tie!"
-    } else{
+        result = "It's a tie!"
+    } 
+    
+    else {
         switch(playerChoice){
             case "rock":
-                if(computerChoice === "paper"){
-                    result = "You lose!"
-                    computerScore++;
-                    updateScoreDisplay();
-                    updateResultDisplay(result);
-                    break;
-            } else if(computerChoice === "scissors"){
-                result = "You win!"
-                playerScore++;
-                updateScoreDisplay();
-                updateResultDisplay(result);
+                result = (computerChoice === "paper") ? "You lose!" : "You win!";
                 break;
-            }
-            case "paper":
-                if (computerChoice === "scissors"){
-                    result = "You lose!"
-                    computerScore++;
-                    updateScoreDisplay();
-                    updateResultDisplay(result);
-                    break;
-                } else if (computerChoice === "rock"){
-                    result = "You win!"
-                    playerScore++;
-                    updateScoreDisplay();
-                    updateResultDisplay(result);
-                    break;
-                }
+           case "paper":
+                result = (computerChoice === "scissors") ? "You lose!" : "You win!";
+                break;
             case "scissors":
-                if (computerChoice === "rock"){
-                    result = "You lose!"
-                    computerScore++;
-                    updateScoreDisplay();
-                    updateResultDisplay(result);
-                    break;
-                } else if (computerChoice === "paper"){
-                    result = "You win!"
-                    playerScore++;
-                    updateScoreDisplay();
-                    updateResultDisplay(result);
-                    break;
-                }
-            default:
-                result = "You win!"
-                playerScore++;
-                updateScoreDisplay();
-                updateResultDisplay(result);
+                result = (computerChoice === "rock") ? "You lose!" : "You win!";
                 break;
         }
     }
+
+    updateResultDisplay(result);
+    updateScoreDisplay(result);
 }
 
 function updateResultDisplay(result){
     resultDisplay.textContent = result;
 }
 
-function updateScoreDisplay(){
+function updateScoreDisplay(result){
+    if (result === "You win!"){
+        playerScore++;
+    } else if (result === "You lose!"){
+        computerScore++;
+    }
+
     playerDisplay.textContent = "Player: " + playerScore;
     computerDisplay.textContent = "Computer: " + computerScore;
 }
